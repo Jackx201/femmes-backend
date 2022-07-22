@@ -22,6 +22,9 @@ public class PublicacionDTO {
 	@NotEmpty
 	private String contenido;
 	
+	@NotEmpty
+	private String estado;
+	
 	private Set<Comentario> comentarios;
 
 	public Long getId() {
@@ -54,6 +57,14 @@ public class PublicacionDTO {
 
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public Set<Comentario> getComentarios() {

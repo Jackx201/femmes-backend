@@ -31,6 +31,9 @@ public class Publicacion {
 
 	@Column(name = "contenido", nullable = false)
 	private String contenido;
+	
+	@Column(name = "estado", nullable = false)
+	private String estado;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -67,6 +70,14 @@ public class Publicacion {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
 	public Set<Comentario> getComentarios() {
 		return comentarios;
@@ -80,12 +91,13 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(Long id, String titulo, String descripcion, String contenido) {
+	public Publicacion(Long id, String titulo, String descripcion, String contenido, String estado) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.contenido = contenido;
+		this.estado = estado;
 	}
 
 }

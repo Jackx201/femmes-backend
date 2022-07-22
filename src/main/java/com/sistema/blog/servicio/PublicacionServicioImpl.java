@@ -75,6 +75,7 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 		publicacion.setTitulo(publicacionDTO.getTitulo());
 		publicacion.setDescripcion(publicacionDTO.getDescripcion());
 		publicacion.setContenido(publicacionDTO.getContenido());
+		publicacion.setEstado(publicacionDTO.getEstado());
 
 		Publicacion publicacionActualizada = publicacionRepositorio.save(publicacion);
 		return mapearDTO(publicacionActualizada);
