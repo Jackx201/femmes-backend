@@ -22,7 +22,7 @@ public class SistemaBlogSpringBootApiRestApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
 		return args -> {
-			kafkaTemplate.send("onis", "Hello Bento");
+			kafkaTemplate.send("onis", "Femmes Online");
 		};
 	}
 
