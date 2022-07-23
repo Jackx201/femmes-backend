@@ -26,14 +26,27 @@ public class Publicacion {
 	@Column(name = "titulo", nullable = false)
 	private String titulo;
 
-	@Column(name = "descripcion", nullable = false)
-	private String descripcion;
-
-	@Column(name = "contenido", nullable = false)
-	private String contenido;
+	@Column(name = "usuario", nullable = false)
+	private String usuario;
+	
+	@Column(name = "numero_contacto", nullable = false)
+	private String numero_contacto;
 	
 	@Column(name = "estado", nullable = false)
 	private String estado;
+	
+	
+	@Column(name = "ultima_localizacion", nullable = false)
+	private String ultima_localizacion;
+	
+	@Column(name = "status", nullable = false)
+	private String status;
+	
+	@Column(name = "descripcion", nullable = false)
+	private String descripcion;
+	
+	@Column(name = "img", nullable = true)
+	private String img;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -63,12 +76,21 @@ public class Publicacion {
 		this.descripcion = descripcion;
 	}
 
-	public String getContenido() {
-		return contenido;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	
+	public String getNumeroContacto() {
+		return numero_contacto;
+	}
+
+	public void setNumeroContacto(String numero_contacto) {
+		this.numero_contacto = numero_contacto;
 	}
 	
 	public String getEstado() {
@@ -78,6 +100,32 @@ public class Publicacion {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	
+	public String getUltimaLocalizacion() {
+		return ultima_localizacion;
+	}
+
+	public void setUltimaLocalizacion(String ultima_localizacion) {
+		this.ultima_localizacion = ultima_localizacion;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
 
 	public Set<Comentario> getComentarios() {
 		return comentarios;
@@ -91,13 +139,18 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(Long id, String titulo, String descripcion, String contenido, String estado) {
+	public Publicacion(Long id, String titulo, String descripcion, String usuario, String estado, String ultima_localizacion, String status, String numero_contacto, String img) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
-		this.descripcion = descripcion;
-		this.contenido = contenido;
+		this.usuario = usuario;
+		//TO-DO Fecha_Desaparición
+		this.numero_contacto = numero_contacto;
 		this.estado = estado;
+		this.ultima_localizacion = ultima_localizacion;
+		this.status = status;
+		this.descripcion = descripcion;
+		this.img = img;
 	}
 
 }

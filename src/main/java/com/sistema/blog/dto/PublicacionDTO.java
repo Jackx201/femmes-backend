@@ -20,10 +20,22 @@ public class PublicacionDTO {
 	private String descripcion;
 	
 	@NotEmpty
-	private String contenido;
+	private String usuario;
 	
 	@NotEmpty
 	private String estado;
+	
+	@NotEmpty
+	private String ultima_localizacion;
+	
+	@NotEmpty
+	private String status;
+	
+	@NotEmpty
+	private String img;
+	
+	@NotEmpty
+	private String numero_contacto;
 	
 	private Set<Comentario> comentarios;
 
@@ -51,12 +63,12 @@ public class PublicacionDTO {
 		this.descripcion = descripcion;
 	}
 
-	public String getContenido() {
-		return contenido;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 	
 	public String getEstado() {
@@ -65,6 +77,38 @@ public class PublicacionDTO {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	public String getUltimaLocalizacion() {
+		return ultima_localizacion;
+	}
+
+	public void setUltimaLocalizacion(String ultima_localizacion) {
+		this.ultima_localizacion = ultima_localizacion;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getNumeroContacto() {
+		return numero_contacto;
+	}
+
+	public void setNumeroContacto(String numero_contacto) {
+		this.numero_contacto = numero_contacto;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public Set<Comentario> getComentarios() {
