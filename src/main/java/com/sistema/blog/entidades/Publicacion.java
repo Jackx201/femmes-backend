@@ -1,5 +1,7 @@
 package com.sistema.blog.entidades;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,12 +31,14 @@ public class Publicacion {
 	@Column(name = "usuario", nullable = false)
 	private String usuario;
 	
+	@Column(name = "fecha_desaparición", nullable = true)
+	private Date fecha_desaparicion;
+	
 	@Column(name = "numero_contacto", nullable = false)
 	private String numero_contacto;
 	
 	@Column(name = "estado", nullable = false)
 	private String estado;
-	
 	
 	@Column(name = "ultima_localizacion", nullable = false)
 	private String ultima_localizacion;
@@ -84,6 +88,13 @@ public class Publicacion {
 		this.usuario = usuario;
 	}
 	
+	public Date getFechaDesaparicion() {
+		return fecha_desaparicion;
+	}
+
+	public void setFechaDesaparicion(Date fecha_desaparicion) {
+		this.fecha_desaparicion = fecha_desaparicion;
+	}
 	
 	public String getNumeroContacto() {
 		return numero_contacto;
@@ -139,12 +150,12 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(Long id, String titulo, String descripcion, String usuario, String estado, String ultima_localizacion, String status, String numero_contacto, String img) {
+	public Publicacion(Long id, String titulo, String descripcion, String usuario, Date fecha_desaparicion, String estado, String ultima_localizacion, String status, String numero_contacto, String img) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.usuario = usuario;
-		//TO-DO Fecha_Desaparición
+		this.fecha_desaparicion = fecha_desaparicion;
 		this.numero_contacto = numero_contacto;
 		this.estado = estado;
 		this.ultima_localizacion = ultima_localizacion;

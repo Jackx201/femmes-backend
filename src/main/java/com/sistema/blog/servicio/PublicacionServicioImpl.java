@@ -75,6 +75,7 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 		publicacion.setTitulo(publicacionDTO.getTitulo());
 		publicacion.setDescripcion(publicacionDTO.getDescripcion());
 		publicacion.setUsuario(publicacionDTO.getUsuario());
+		publicacion.setFechaDesaparicion(publicacionDTO.getFechaDesaparicion());
 		publicacion.setEstado(publicacionDTO.getEstado());
 		publicacion.setNumeroContacto(publicacionDTO.getNumeroContacto());
 		publicacion.setUltimaLocalizacion(publicacionDTO.getUltimaLocalizacion());

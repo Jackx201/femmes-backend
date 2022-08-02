@@ -1,5 +1,7 @@
 package com.sistema.blog.dto;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +23,9 @@ public class PublicacionDTO {
 	
 	@NotEmpty
 	private String usuario;
+	
+	@NotEmpty
+	private Date fecha_desaparicion;
 	
 	@NotEmpty
 	private String estado;
@@ -69,6 +74,14 @@ public class PublicacionDTO {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Date getFechaDesaparicion() {
+		return fecha_desaparicion;
+	}
+
+	public void setFechaDesaparicion(Date fecha_desaparicion) {
+		this.fecha_desaparicion = fecha_desaparicion;
 	}
 	
 	public String getEstado() {
