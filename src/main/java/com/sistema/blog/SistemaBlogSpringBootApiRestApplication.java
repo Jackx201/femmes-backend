@@ -18,12 +18,12 @@ public class SistemaBlogSpringBootApiRestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaBlogSpringBootApiRestApplication.class, args);
 	}
-	
-	@Bean
-	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
-		return args -> {
-			kafkaTemplate.send("onis", "Femmes Online");
-		};
-	}
+
+//	@Bean
+//	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
+//		return args -> {
+//			kafkaTemplate.send("Femmes", "Femmes Online");
+//		};
+//	}
 
 }
