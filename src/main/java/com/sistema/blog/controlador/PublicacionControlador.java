@@ -47,17 +47,17 @@ public class PublicacionControlador {
 		return ResponseEntity.ok(publicacionServicio.obtenerPublicacionPorId(id));
 	}
 
-	//private KafkaTemplate<String, String> kafkaTemplate;
+	private KafkaTemplate<String, String> kafkaTemplate; 
 
 	
-//	public PublicacionControlador(KafkaTemplate<String, String> kafkaTemplate) {
-//		this.kafkaTemplate = kafkaTemplate;
-//	}
+	public PublicacionControlador(KafkaTemplate<String, String> kafkaTemplate) {
+		this.kafkaTemplate = kafkaTemplate;
+	}
 
 	@PostMapping
 	@CrossOrigin(origins = "*", methods= {RequestMethod.POST})
 	public ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO) {
-		//kafkaTemplate.send("onis", publicacionDTO.getTitulo());
+		kafkaTemplate.send("onis", publicacionDTO.getTitulo()); 
 		return new ResponseEntity<>(publicacionServicio.crearPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
