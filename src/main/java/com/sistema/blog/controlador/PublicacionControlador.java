@@ -67,7 +67,7 @@ public class PublicacionControlador {
 	@PostMapping
 	@CrossOrigin(origins = "*", methods= {RequestMethod.POST})
 	public ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO) {
-		//kafkaTemplate.send("onis", publicacionDTO.getTitulo());
+		//kafkaTemplate.send("Femmes", publicacionDTO.getTitulo());
 		return new ResponseEntity<>(publicacionServicio.crearPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
@@ -106,7 +106,7 @@ public class PublicacionControlador {
 			String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
 
 			// Define the destination path to save the file
-			String uploadDir = "Frontend/public/images/victimas"; // Replace with the desired path
+			String uploadDir = "../Frontend/public/images/victimas"; // Replace with the desired path
 
 			// Create the destination directory if it doesn't exist
 			File dir = new File(uploadDir);
@@ -122,7 +122,7 @@ public class PublicacionControlador {
 			Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
 			// Return the URL or path to the saved image
-			String fileUrl = "Frontend/public/images/victimas" + uniqueFileName; // Replace with the appropriate URL or path
+			String fileUrl = "../Frontend/public/images/victimas" + uniqueFileName; // Replace with the appropriate URL or path
 			return ResponseEntity.ok(fileUrl);
 		} catch (IOException e) {
 			e.printStackTrace();
