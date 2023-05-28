@@ -23,6 +23,16 @@ import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.servicio.PublicacionServicio;
 import com.sistema.blog.utilerias.AppConstantes;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowedHeaders = "*")
 @RestController
@@ -77,4 +87,49 @@ public class PublicacionControlador {
 		publicacionServicio.eliminarPublicacion(id);
 		return new ResponseEntity<>("Publicacion eliminada con exito", HttpStatus.OK);
 	}
+
+	@PostMapping("/upload-image")
+	public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+		try {
+			// Check if the file is empty
+			if (file.isEmpty()) {
+				return ResponseEntity.badRequest().body("Empty file");
+			}
+
+			// Get the original file name
+			String fileName = file.getOriginalFilename();
+
+			// Get the file extension
+			String fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf("."));
+
+			// Generate a unique name for the file
+			String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+
+			// Define the destination path to save the file
+			String uploadDir = "Frontend/public/images/victimas"; // Replace with the desired path
+
+			// Create the destination directory if it doesn't exist
+			File dir = new File(uploadDir);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+
+			String absolutePath = dir.getAbsolutePath();
+			System.out.println("Absolute path: " + absolutePath);
+
+			// Save the file to the destination directory
+			Path filePath = Paths.get(uploadDir, uniqueFileName);
+			Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+			// Return the URL or path to the saved image
+			String fileUrl = "Frontend/public/images/victimas" + uniqueFileName; // Replace with the appropriate URL or path
+			return ResponseEntity.ok(fileUrl);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving the image");
+		}
+	}
+
+
+
 }
