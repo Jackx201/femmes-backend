@@ -2,22 +2,13 @@ package com.sistema.blog.controlador;
 
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
@@ -66,10 +57,60 @@ public class PublicacionControlador {
 
 	@PostMapping
 	@CrossOrigin(origins = "*", methods= {RequestMethod.POST})
-	public ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO) {
-		//kafkaTemplate.send("Femmes", publicacionDTO.getTitulo());
-		return new ResponseEntity<>(publicacionServicio.crearPublicacion(publicacionDTO), HttpStatus.CREATED);
+	public ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestPart("file") MultipartFile file, @RequestParam("publicacionDTO") String publicacionDTOJson) {
+		try {
+			// Convertir el JSON de la publicación a objeto PublicacionDTO
+			ObjectMapper objectMapper = new ObjectMapper();
+			PublicacionDTO publicacionDTO = objectMapper.readValue(publicacionDTOJson, PublicacionDTO.class);
+
+			// Verificar si se envió un archivo adjunto
+			if (file != null && !file.isEmpty()) {
+				// Realizar el guardado de la imagen
+				String imageUrl = guardarImagen(file);
+				publicacionDTO.setImg(imageUrl); // Establecer la URL de la imagen en el objeto PublicacionDTO
+			}
+
+			// Guardar la publicación
+			PublicacionDTO resultado = publicacionServicio.crearPublicacion(publicacionDTO);
+			return new ResponseEntity<>(resultado, HttpStatus.CREATED);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
 	}
+
+	private String guardarImagen(MultipartFile file) throws IOException {
+		// Check if the file is empty
+		if (file.isEmpty()) {
+			throw new IllegalArgumentException("Empty file");
+		}
+
+		// Get the original file name
+		String fileName = file.getOriginalFilename();
+
+		// Get the file extension
+		String fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf("."));
+
+		// Generate a unique name for the file
+		String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+
+		// Define the destination path to save the file
+		String uploadDir = "../Frontend/public/images/victimas"; // Replace with the desired path
+
+		// Create the destination directory if it doesn't exist
+		File dir = new File(uploadDir);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		// Save the file to the destination directory
+		Path filePath = Paths.get(uploadDir, uniqueFileName);
+		Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+		// Return the URL or path to the saved image
+		return "/images/victimas/" + uniqueFileName;
+	}
+
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
